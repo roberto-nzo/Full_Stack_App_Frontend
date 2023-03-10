@@ -1,13 +1,348 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  line-height: 2.2;
+}
+
+table {
+  border-collapse: collapse;
+  width: 80%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.menu-btn {
+  top: 35px;
+  left: 35px;
+  cursor: pointer;
+}
+
+.menu-bar {
+  background: #000;
+  width: 28px;
+  height: 3px;
+  margin: 0 0 5px 0;
+}
+
+.content {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.content .btn_btn {
+  justify-self: end;
+  align-self: start;
+  margin-top: -200px;
+  margin-bottom: 50px;
+  margin-left: 20px;
+}
+
+.content .btn_btn .btn_add {
+  background-color: #4CAF50;
+  border: none;
+  cursor: pointer;
+  padding: 10px 27px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 20.7vw;
+  position: fixed;
+  left: 0;
+}
+
+.profile-branding .portrait {
+  width: 150px;
+  height: 150px;
+  background: url(./assets/images/gunsel-logo.png);
+  border-radius: 50%;
+  background-size: cover;
+  margin-top: 10px;
+}
+
+.profile {
+  display: flex;
+  justify-content: space-around;
+  height: 25vh;
+  background: rgb(114, 66, 159);
+  color: #fff;
+  padding-bottom: 170px;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.description .view-profile .view a {
+  background: rgb(114, 66, 159);
+  color: #fff;
+  font-size: 12px;
+  padding: 5px 15px;
+  border-radius: 15px;
+  border: #fff 1px solid;
+}
+
+.description .view-profile {
+  margin-top: 25px;
+}
+
+.side-links {
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: 55px;
+  width: 25vw;
+}
+
+.side-link {
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  background: #333;
+}
+
+._link {
+  color: #fff;
+}
+
+.side-link .fix-icon {
+  padding: 0px 3px;
+  margin-right: 15px;
+  border: #333 1px solid;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  font-size: 2em;
+}
+
+.side-links .current {
+  background: rgb(222, 222, 222);
+}
+
+.courses {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.course {
+  background-color: #f4f4f4;
+  margin: 15px 0;
+  padding: 20px 0 10px;
+  position: relative;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 78.4vw;
+  height: 116vh;
+  background: rgb(244, 236, 255);
+  position: absolute;
+  right: 0;
+}
+
+.options .topNav {
+  align-self: end;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.options .topNav ul {
+  display: flex;
+}
+
+.options .topNav ul li {
+  margin-right: 2em;
+}
+
+.options .home {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -7px;
+}
+
+.options .home .wise {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* justify-content: space-between; */
+  background: rgb(239, 230, 239);
+  width: 37vw;
+  height: 37vh;
+  padding: 1vh 2vh 2vh 2vh;
+  margin-top: -7vh;
+  margin-left: 1.5vw;
+  margin-right: 1.5vw;
+  border-radius: 10px;
+  box-shadow: #333 0px 3px 25px -18px;
+}
+
+.be {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 25vw;
+  height: 25vh;
+}
+
+.be p {
+  font-size: xx-large;
+}
+
+.be i {
+  font-size: 4rem;
+  color: rgb(52, 52, 133)
+}
+
+.options .home .smart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 37vw;
+  height: 37vh;
+  background: rgb(237, 237, 237);
+  margin-top: -7vh;
+  border-radius: 10px;
+  box-shadow: #333 0px 3px 25px -18px;
+}
+
+.options .main-title {
+  margin-top: -50px;
+  margin-left: 1.5vw;
+  margin-right: 1.5vw;
+  padding: 10px 70px;
+  padding-bottom: 20px;
+  margin-bottom: 20vh;
+  font-size: 2rem;
+  font-weight: bold;
+  box-shadow: #333 -5px 0px 20px -20px;
+}
+
+.options .add {
+  margin-top: 7vh;
+  margin-left: 1.5vw;
+  margin-right: 1.5vw;
+  padding: 10px 70px;
+  padding-bottom: 20px;
+  margin-bottom: 20vh;
+  font-size: 2rem;
+  font-weight: bold;
+  box-shadow: #333 -5px 0px 20px -20px;
+}
+
+.options .content {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: inherit;
+}
+
+.form-group label {
+  text-align: left;
+  display: block;
+  margin: 0 0 5px 3px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  background: #000;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  appearance: button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-block {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.loadingSpinnerContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingSpinner {
+  width: 64px;
+  height: 64px;
+  border: 8px solid;
+  border-color: #000 transparent #555 transparent;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
 }
