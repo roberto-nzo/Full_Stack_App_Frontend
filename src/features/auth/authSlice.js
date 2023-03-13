@@ -64,7 +64,7 @@ export const authSlice = createSlice({
     // what in reducer functions are not asyncronous, they are not gonna be thunk functions
     reducers: {
         reset: state => { // this function reset the state to the default values or initial values
-            // state.users = []
+            state.users = []
             state.isLoading = false
             state.isSuccess = false
             state.isError = false

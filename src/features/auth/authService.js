@@ -2,7 +2,7 @@
 
 import axios from 'axios'
 
-const API_URL = '/api/students/'
+const API_URL = 'students/'
 
 
 // Register user

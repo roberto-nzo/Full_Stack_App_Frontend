@@ -6,7 +6,9 @@ import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { getClasses, reset as classReset } from "../../features/classes/classSlice"
-import { logout, reset } from '../../features/auth/authSlice'
+import { reset as courseReset } from "../../features/courses/courseSlice"
+import { logout, reset as studentReset } from '../../features/auth/authSlice'
+import Spinner from "../../components/Spinner";
 
 
 function Classes() {
@@ -34,9 +36,14 @@ function Classes() {
         dispatch(getClasses())
 
         return () => {
-            dispatch(reset())
+            dispatch(studentReset())
+            dispatch(courseReset())
         }
     }, [user, navigate, isError, message, dispatch])
+
+    if (isLoading) {
+        return <Spinner />
+    }
     return (
         <>
             <div className="topNav">

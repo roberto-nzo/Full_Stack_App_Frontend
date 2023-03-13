@@ -2,27 +2,25 @@ import React from "react"
 import { Link } from 'react-router-dom'
 import { SiBookstack } from 'react-icons/si'
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
-import { BsPeopleFill } from 'react-icons/bs'
 import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { toast } from 'react-toastify'
-import CourseForm from "../../components/CourseForm"
-import CourseItem from "../../components/CourseItem"
+import { reset as classReset } from "../../features/classes/classSlice"
 import { getCourses, reset as courseReset } from "../../features/courses/courseSlice"
-import { getStudents, logout, reset as studentReset } from '../../features/auth/authSlice'
+import { logout, reset as studentReset } from '../../features/auth/authSlice'
+import Spinner from "../../components/Spinner";
 
 function Courses() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { user, users } = useSelector(state => state.auth)
+    const { user } = useSelector(state => state.auth)
     const { courses, isLoading, isError, message } = useSelector(state => state.courses)
 
     const onLogout = () => {
         dispatch(logout())
         dispatch(courseReset())
-        dispatch(studentReset())
         navigate('/')
     }
 
@@ -36,12 +34,16 @@ function Courses() {
         }
 
         dispatch(getCourses())
-        dispatch(getStudents())
 
         return () => {
             dispatch(studentReset())
+            dispatch(classReset())
         }
     }, [user, navigate, isError, message, dispatch])
+
+    if (isLoading) {
+        return <Spinner />
+    }
     return (
         <>
             <div className="topNav">

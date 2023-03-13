@@ -1,14 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { BsPeopleFill } from 'react-icons/bs'
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import CourseForm from '../../components/CourseForm'
+import { reset as classReset } from '../../features/classes/classSlice'
 import Spinner from '../../components/Spinner'
-import { getCourses, reset as courseReset } from '../../features/courses/courseSlice'
+import { reset as courseReset } from '../../features/courses/courseSlice'
 import { getStudents, logout, reset as studentReset } from '../../features/auth/authSlice'
 
 function Students() {
@@ -36,6 +35,7 @@ function Students() {
 
         return () => {
             dispatch(courseReset())
+            dispatch(classReset())
         }
     }, [user, navigate, isError, message, dispatch])
 

@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = '/api/classes/'
+const API_URL = 'classes/'
 
 // Create class
 const createClass = async (classes, token) => {
