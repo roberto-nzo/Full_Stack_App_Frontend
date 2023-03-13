@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom"
 import { toast } from 'react-toastify'
 import CourseForm from "../../components/CourseForm"
 import CourseItem from "../../components/CourseItem"
-import { getCourses, reset } from "../../features/courses/courseSlice"
-import { getStudents, logout } from '../../features/auth/authSlice'
+import { getCourses, reset as courseReset } from "../../features/courses/courseSlice"
+import { getStudents, logout, reset as studentReset } from '../../features/auth/authSlice'
 
 function Courses() {
     const navigate = useNavigate()
@@ -21,7 +21,8 @@ function Courses() {
 
     const onLogout = () => {
         dispatch(logout())
-        dispatch(reset())
+        dispatch(courseReset())
+        dispatch(studentReset())
         navigate('/')
     }
 
@@ -30,15 +31,15 @@ function Courses() {
             toast.error(message)
         }
 
-        // if (!user) {
-        //     navigate('/login')
-        // }
+        if (!user) {
+            navigate('/login')
+        }
 
         dispatch(getCourses())
         dispatch(getStudents())
 
         return () => {
-            dispatch(reset())
+            dispatch(studentReset())
         }
     }, [user, navigate, isError, message, dispatch])
     return (

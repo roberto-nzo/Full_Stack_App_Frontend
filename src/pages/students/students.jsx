@@ -8,8 +8,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import CourseForm from '../../components/CourseForm'
 import Spinner from '../../components/Spinner'
-// import { getCourses, reset } from '../../features/courses/courseSlice'
-import { getStudents, logout, reset } from '../../features/auth/authSlice'
+import { getCourses, reset as courseReset } from '../../features/courses/courseSlice'
+import { getStudents, logout, reset as studentReset } from '../../features/auth/authSlice'
 
 function Students() {
     const navigate = useNavigate()
@@ -19,7 +19,7 @@ function Students() {
 
     const onLogout = () => {
         dispatch(logout())
-        dispatch(reset())
+        dispatch(studentReset())
         navigate('/')
     }
 
@@ -28,14 +28,14 @@ function Students() {
             toast.error(message)
         }
 
-        // if (!user) {
-        //     navigate('/login')
-        // }
+        if (!user) {
+            navigate('/login')
+        }
 
         dispatch(getStudents())
 
         return () => {
-            dispatch(reset())
+            dispatch(courseReset())
         }
     }, [user, navigate, isError, message, dispatch])
 

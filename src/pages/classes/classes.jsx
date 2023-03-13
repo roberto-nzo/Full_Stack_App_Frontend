@@ -5,8 +5,8 @@ import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
-import { getClasses, reset } from "../../features/classes/classSlice"
-import { logout } from '../../features/auth/authSlice'
+import { getClasses, reset as classReset } from "../../features/classes/classSlice"
+import { logout, reset } from '../../features/auth/authSlice'
 
 
 function Classes() {
@@ -18,7 +18,7 @@ function Classes() {
 
     const onLogout = () => {
         dispatch(logout())
-        dispatch(reset())
+        dispatch(classReset())
         navigate('/')
     }
 
@@ -27,9 +27,9 @@ function Classes() {
             toast.error(message)
         }
 
-        // if (!user) {
-        //     navigate('/login')
-        // }
+        if (!user) {
+            navigate('/login')
+        }
 
         dispatch(getClasses())
 
