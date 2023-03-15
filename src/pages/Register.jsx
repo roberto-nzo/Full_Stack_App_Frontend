@@ -15,6 +15,7 @@ import Spinner from '../components/Spinner'
 
 
 function Register() {
+    // the object has properties for each input in our form equal spelling as name attribute in the form
     const [formData, setFormData] = useState({
         firstname: '',
         lastname: '',
@@ -52,10 +53,12 @@ function Register() {
     }, [user, isError, isSuccess, message, navigate, dispatch]) // anything in dependency array fire off useEffet if any of this changes
 
     const onSubmit = (e) => {
+        // prevents the form from doing a post request when it's submitted
         e.preventDefault()
         if (password !== password2) {
             toast.error('Passwords do not match')
         } else {
+            // object properties come from form data
             const userData = {
                 firstname,
                 lastname,

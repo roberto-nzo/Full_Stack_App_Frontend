@@ -82,10 +82,12 @@ function Courses() {
                     <th>Students</th>
                 </tr>
                 {courses.map(course => {
-                    return <tr>
-                        <td>{course.coursename}</td>
-                        <td>{course.Students.length !== 0 ? course.Students.map(std => std.firstname + ", ") : "-"}</td>
-                    </tr>
+                    return (
+                        <tr>
+                            <td>{course.coursename}</td>
+                            <td>{course.Students.length !== 0 ? course.Students.map(std => std.firstname + ", ") : "-"}</td>
+                        </tr>
+                    )
                 })}
             </table>
         </>

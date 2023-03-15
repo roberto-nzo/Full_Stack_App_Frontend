@@ -1,2 +1,3 @@
-/api/* https://fullstackapp-production-c59e.up.railway.app/:splat 200
+/api
+/* https://fullstackapp-production-c59e.up.railway.app/:splat 200
 /* /index.html 200

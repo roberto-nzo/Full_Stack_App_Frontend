@@ -2,10 +2,11 @@
 import { React, useState, useEffect } from 'react'
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getStudents, reset } from '../../features/auth/authSlice';
-import { createCourse, getCourses } from '../../features/courses/courseSlice';
+import Spinner from '../../components/Spinner';
+import { getStudents } from '../../features/auth/authSlice';
+import { createCourse, reset as courseReset } from '../../features/courses/courseSlice';
 
 
 function Addcourse() {
@@ -19,7 +20,7 @@ function Addcourse() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { users } = useSelector(state => state.auth)
+    const { users, user } = useSelector(state => state.auth)
     const { isLoading, isError, isSuccess, message, isCreated } = useSelector(state => state.courses)
 
     const onChange = (e) => {
@@ -38,8 +39,16 @@ function Addcourse() {
             navigate("/courses")
         }
 
-        dispatch(reset())
-    }, [isError, isSuccess, message, navigate, dispatch, isCreated])
+        if (!user) {
+            navigate("/login")
+        }
+
+        dispatch(getStudents())
+
+        return () => {
+            dispatch(courseReset())
+        }
+    }, [isError, message, isSuccess, isCreated, user, navigate, dispatch,])
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -48,6 +57,10 @@ function Addcourse() {
             student
         }
         dispatch(createCourse(course))
+    }
+
+    if (isLoading) {
+        return <Spinner />
     }
 
     return <>

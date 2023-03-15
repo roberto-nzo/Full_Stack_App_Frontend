@@ -35,6 +35,10 @@ th {
   padding: 8px;
 }
 
+.edit_row {
+  cursor: pointer;
+}
+
 tr:nth-child(even) {
   background-color: #dddddd;
 }

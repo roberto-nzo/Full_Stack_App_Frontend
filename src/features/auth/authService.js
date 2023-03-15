@@ -18,9 +18,16 @@ const register = async (userData) => {
     return response.data
 }
 
+// Update student
+const updateStudent = async (userData) => {
+    const response = await axios.patch(API_URL + `${userData.id}`, userData)
+    return response.data
+}
+
 // Login user
 const login = async (userData) => {
     const response = await axios.post(API_URL + 'login', userData)
+    console.log(userData)
 
     if (response.data) {
         localStorage.setItem('user', JSON.stringify(response.data))
@@ -38,7 +45,6 @@ const getStudents = async (token) => {
     }
 
     const response = await axios.get(API_URL, config)
-    console.log(response)
     return response.data
 }
 
@@ -49,6 +55,7 @@ const logout = () => {
 
 const authService = {
     register,
+    updateStudent,
     login,
     getStudents,
     logout

@@ -3,9 +3,10 @@ import { React, useState, useEffect } from 'react'
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { reset } from '../../features/auth/authSlice';
-import { createClass } from '../../features/classes/classSlice';
+import { getStudents } from '../../features/auth/authSlice';
+import { createClass, reset as classReset } from '../../features/classes/classSlice';
 import { toast } from 'react-toastify'
+import Spinner from '../../components/Spinner';
 
 
 function Addclass() {
@@ -38,7 +39,11 @@ function Addclass() {
             navigate("/classes")
         }
 
-        dispatch(reset())
+        dispatch(getStudents())
+
+        return () => {
+            dispatch(classReset())
+        }
     }, [isError, isSuccess, message, navigate, isCreated, dispatch])
 
     const onSubmit = (e) => {
@@ -48,6 +53,10 @@ function Addclass() {
             student
         }
         dispatch(createClass(class_))
+    }
+
+    if (isLoading) {
+        return <Spinner />
     }
 
     return <>
