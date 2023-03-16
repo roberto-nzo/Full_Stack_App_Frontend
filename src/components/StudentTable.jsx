@@ -22,7 +22,7 @@ function StudentTable({ user, onEditClick }) {
             <td>{user.lastname}</td>
             <td>{user.age}</td>
             <td>{user.class ? user.class : "-"}</td>
-            <td>{user.course.length !== 0 ? user.course.map(course => { return <span key={course.id}>{course.course + ", "}</span> }) : "-"}</td>
+            <td>{user.course.length !== 0 ? user.course.map(course => { return <span key={course.id}>{course + ", "}</span> }) : "-"}</td>
             <td><CiEdit className="edit_row" onClick={(event) => onEditClick(event, user)} /></td>
             <td><AiFillDelete className="edit_row" onClick={() => onDelete(user)} /></td>
         </tr>
