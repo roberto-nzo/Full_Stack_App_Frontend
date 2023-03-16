@@ -9,6 +9,8 @@ const initialState = { // this object pertains to the user part of our state or 
     users: [],
     isError: false, // we can change it to true if we get an error from the server
     isSuccess: false,
+    isUpdating: false,
+    isDeleting: false,
     isLoading: false, // if we wanna show a spinner
     message: ''
 }
@@ -66,6 +68,16 @@ export const logout = createAsyncThunk('auth/logout', async () => {
     await authService.logout()
 })
 
+// Delete student
+export const deleteStudent = createAsyncThunk('auth/delete', async (user, thunkAPI) => {
+    try {
+        return authService.deleteStudent(user)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 // Create the slice
 export const authSlice = createSlice({
     name: 'auth', // Name of the slice
@@ -77,6 +89,8 @@ export const authSlice = createSlice({
             state.users = []
             state.isLoading = false
             state.isSuccess = false
+            state.isUpdating = false
+            state.isDeleting = false
             state.isError = false
             state.message = ''
         }
@@ -101,16 +115,18 @@ export const authSlice = createSlice({
             })
             .addCase(updateStudent.pending, (state) => {
                 state.isLoading = true
+                state.isUpdating = true
             })
             .addCase(updateStudent.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.users = action.payload
+                state.isUpdating = false
+                // state.users = action.payload
             })
             .addCase(updateStudent.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
-                state.message = action.payload // in catch from register we call thunkAPI.rejectWithValue that pass in the message as the payload
+                state.message = action.payload
                 state.user = null
             })
             .addCase(login.pending, (state) => {
@@ -139,6 +155,20 @@ export const authSlice = createSlice({
                 state.users = action.payload
             })
             .addCase(getStudents.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(deleteStudent.pending, (state) => {
+                state.isLoading = true
+                state.isDeleting = true
+            })
+            .addCase(deleteStudent.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isDeleting = false
+            })
+            .addCase(deleteStudent.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

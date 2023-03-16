@@ -21,6 +21,7 @@ const register = async (userData) => {
 // Update student
 const updateStudent = async (userData) => {
     const response = await axios.patch(API_URL + `${userData.id}`, userData)
+    
     return response.data
 }
 
@@ -53,12 +54,27 @@ const logout = () => {
     localStorage.removeItem('user')
 }
 
+// Delete student
+const deleteStudent = async(userData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    console.log("_______________+++++++++++++++=============>")
+
+    console.log(userData)
+    const response = await axios.delete(API_URL + `${userData}`, userData)
+    return response.data
+}
+
 const authService = {
     register,
     updateStudent,
     login,
     getStudents,
-    logout
+    logout,
+    deleteStudent
 }
 
 export default authService

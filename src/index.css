@@ -23,6 +23,11 @@ li {
   line-height: 2.2;
 }
 
+.table_form{
+  border-collapse: collapse;
+  width: 80%;
+}
+
 table {
   border-collapse: collapse;
   width: 80%;
@@ -31,7 +36,7 @@ table {
 td,
 th {
   border: 1px solid #dddddd;
-  text-align: left;
+  text-align: center;
   padding: 8px;
 }
 

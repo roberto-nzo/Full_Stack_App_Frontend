@@ -14,7 +14,8 @@ function Students() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { user, users, isLoading, isError, message } = useSelector(state => state.auth)
+    const { user, users, isUpdating, isLoading, isDeleting, isError, message } = useSelector(state => state.auth)
+
     const [editStudentId, setEditStudentId] = useState(null)
     const [editFormData, setEditFormData] = useState({
         id: '',
@@ -25,11 +26,20 @@ function Students() {
         courseData: ''
     })
 
+    const [dataOnChange, setDataOnChange] = useState({
+        courseData: []
+    })
+
+    const { courseData } = editFormData
+
     const onChange = (e) => {
-        setEditFormData((prevState) => ({
-            ...prevState, // spread accross the previous state bcz we want all the other fields
-            [e.target.name]: e.target.value
-        }))
+        setEditFormData((prevState) => (
+            {
+                ...prevState, // spread accross the previous state bcz we want all the other fields
+                [e.target.name]: e.target.value
+
+            }))
+        e.preventDefault()
     }
 
     const onEditClick = (event, user) => {
@@ -42,15 +52,20 @@ function Students() {
             lastname: user.lastname,
             age: user.age,
             classname: user.class,
-            courseData: user.course
+            courseData: user.course.map(course => { return course.course })
         }
-        console.log(editValues.id)
 
         setEditFormData(editValues)
+        setDataOnChange(editValues.courseData)
     }
 
     const handleCancelClick = () => {
+        const data = {
+            courseData: []
+        }
+        setDataOnChange(data)
         setEditStudentId(null)
+
     }
 
     const onSubmitEdit = (e) => {
@@ -62,12 +77,11 @@ function Students() {
             lastname: editFormData.lastname,
             age: editFormData.age,
             class: editFormData.classname,
-            courseData: editFormData.courseData
+            courseData: courseData
         }
-        console.log(editedStudent.id)
+        console.log("__________________------------------>" + courseData)
 
         dispatch(updateStudent(editedStudent))
-        setEditStudentId(null)
     }
 
     const onLogout = () => {
@@ -84,6 +98,16 @@ function Students() {
         if (!user) {
             navigate('/login')
         }
+
+        if (isUpdating) {
+            setEditStudentId(null)
+            // dispatch(getStudents())
+        }
+
+        if (isDeleting) {
+            dispatch(studentReset())
+        }
+
         dispatch(getCourses())
         dispatch(getStudents())
 
@@ -91,7 +115,7 @@ function Students() {
             dispatch(courseReset())
             dispatch(classReset())
         }
-    }, [user, navigate, isError, message, dispatch])
+    }, [user, navigate, isUpdating, isError, isDeleting, message, dispatch])
 
     if (isLoading) {
         return <Spinner />
@@ -126,7 +150,7 @@ function Students() {
                     <Link to='/addstudent'><BsPeopleFill />Add student</Link>
                 </button>
             </div> */}
-            <form onSubmit={onSubmitEdit}>
+            <form onSubmit={onSubmitEdit} className="table_form">
                 <table>
                     <thead>
                         <tr>
@@ -136,20 +160,23 @@ function Students() {
                             <th>Class</th>
                             <th>Courses</th>
                             <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
 
-                    {users?.map(user => (
-                        <tbody key={user.id}>
-                            <Fragment>
-                                {editStudentId === user.id ? (
-                                    <EditRow editFormData={editFormData} onChange={onChange} handleCancelClick={handleCancelClick} />
-                                ) : (
-                                    <StudentTable user={user} onEditClick={onEditClick} />
-                                )}
-                            </Fragment>
-                        </tbody>
-                    ))}
+                    {users?.map(user => {
+                        return (
+                            <tbody key={user.id}>
+                                <Fragment>
+                                    {editStudentId === user.id ? (
+                                        <EditRow editFormData={editFormData} setDataOnChange={setDataOnChange} dataOnChange={dataOnChange} onChange={onChange} handleCancelClick={handleCancelClick} />
+                                    ) : (
+                                        <StudentTable user={user} onEditClick={onEditClick} />
+                                    )}
+                                </Fragment>
+                            </tbody>
+                        )
+                    })}
 
                 </table>
             </form>
