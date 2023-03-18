@@ -11,6 +11,7 @@ const initialState = { // this object pertains to the user part of our state or 
     isSuccess: false,
     isUpdating: false,
     isDeleting: false,
+    isRemoving: false,
     isLoading: false, // if we wanna show a spinner
     message: ''
 }
@@ -69,9 +70,21 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 })
 
 // Delete student
-export const deleteStudent = createAsyncThunk('auth/delete', async (user, thunkAPI) => {
+export const deleteStudent = createAsyncThunk('students/delete', async (user, thunkAPI) => {
     try {
-        return authService.deleteStudent(user)
+        const token = thunkAPI.getState().auth.user.token
+        return authService.deleteStudent(user, token)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// Remove course
+export const removeStudentsCourse = createAsyncThunk("students/course/remove", async (user, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return authService.removeStudentsCourse(user)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
@@ -91,6 +104,7 @@ export const authSlice = createSlice({
             state.isSuccess = false
             state.isUpdating = false
             state.isDeleting = false
+            state.isRemoving = false
             state.isError = false
             state.message = ''
         }
@@ -118,12 +132,13 @@ export const authSlice = createSlice({
                 state.isUpdating = true
             })
             .addCase(updateStudent.fulfilled, (state, action) => {
+                state.isUpdating = false
                 state.isLoading = false
                 state.isSuccess = true
-                state.isUpdating = false
                 // state.users = action.payload
             })
             .addCase(updateStudent.rejected, (state, action) => {
+                state.isUpdating = false
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
@@ -163,12 +178,28 @@ export const authSlice = createSlice({
                 state.isLoading = true
                 state.isDeleting = true
             })
-            .addCase(deleteStudent.fulfilled, (state, action) => {
+            .addCase(deleteStudent.fulfilled, (state) => {
+                state.isDeleting = false
                 state.isLoading = false
                 state.isSuccess = true
-                state.isDeleting = false
             })
             .addCase(deleteStudent.rejected, (state, action) => {
+                state.isDeleting = false
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(removeStudentsCourse.pending, (state) => {
+                state.isLoading = true
+                state.isRemoving = true
+            })
+            .addCase(removeStudentsCourse.fulfilled, (state) => {
+                state.isRemoving = false
+                state.isLoading = false
+                state.isSuccess = true
+            })
+            .addCase(removeStudentsCourse.rejected, (state, action) => {
+                state.isRemoving = false
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

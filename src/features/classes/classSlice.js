@@ -6,6 +6,7 @@ const initialState = {
     isError: false,
     isSuccess: false,
     isLoading: false,
+    isDeleting: false,
     message: '',
     isCreated: false
 }
@@ -26,6 +27,17 @@ export const createClass = createAsyncThunk('classes/create', async (classes, th
     try {
         const token = thunkAPI.getState().auth.user.token
         return await classService.createClass(classes, token)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// Delete class
+export const deleteClass = createAsyncThunk('classes/delete', async (classes, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await classService.deleteClass(classes, token)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
@@ -64,6 +76,21 @@ export const classSlice = createSlice({
             })
             .addCase(createClass.rejected, (state, action) => {
                 state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(deleteClass.pending, state => {
+                state.isLoading = true
+                state.isDeleting = true
+            })
+            .addCase(deleteClass.fulfilled, (state) => {
+                state.isDeleting = false
+                state.isLoading = false
+                state.isSuccess = true
+            })
+            .addCase(deleteClass.rejected, (state, action) => {
+                state.isLoading = false
+                state.isDeleting = false
                 state.isError = true
                 state.message = action.payload
             })

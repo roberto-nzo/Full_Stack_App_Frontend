@@ -26,7 +26,7 @@ function Login() {
         }
 
         if (isSuccess || user) {
-            navigate('/')
+            navigate('/students')
         }
 
         dispatch(reset())

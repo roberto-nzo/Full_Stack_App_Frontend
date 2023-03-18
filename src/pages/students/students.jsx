@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import { reset as classReset } from '../../features/classes/classSlice'
+import { getClasses, reset as classReset } from '../../features/classes/classSlice'
 import { getCourses, reset as courseReset } from '../../features/courses/courseSlice'
-import { getStudents, updateStudent, logout, reset as studentReset } from '../../features/auth/authSlice'
+import { getStudents, updateStudent, logout, removeStudentsCourse, reset as studentReset } from '../../features/auth/authSlice'
 import StudentTable from "../../components/StudentTable"
 import EditRow from '../../components/EditRow';
 import Spinner from '../../components/Spinner'
@@ -14,9 +14,12 @@ function Students() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { user, users, isUpdating, isLoading, isDeleting, isError, message } = useSelector(state => state.auth)
+    const { user, users, isUpdating, isLoading, isDeleting, isRemoving, isError, message } = useSelector(state => state.auth)
 
+    // holds user.id of object to be edited
     const [editStudentId, setEditStudentId] = useState(null)
+
+    // holds object data onClick on edit icon
     const [editFormData, setEditFormData] = useState({
         id: '',
         firstname: '',
@@ -26,9 +29,19 @@ function Students() {
         courseData: ''
     })
 
+    // holds courses to be kept
     const [dataOnChange, setDataOnChange] = useState({
-        courseData: []
+        coursesData: [],
+        class_: ''
     })
+
+    // state of courses to be removed from student
+    const [removeCourse, setRemoveCourse] = useState({
+        id: '',
+        removeCourseData: []
+    })
+
+    const { coursesData, class_ } = dataOnChange
 
     const { courseData } = editFormData
 
@@ -52,11 +65,16 @@ function Students() {
             lastname: user.lastname,
             age: user.age,
             classname: user.class,
-            courseData: user.course.map(course => { return course.course })
         }
 
         setEditFormData(editValues)
-        setDataOnChange(editValues.courseData)
+        setDataOnChange({
+            coursesData: user.course.map(course => { return course }),
+            class_: editValues.classname
+        })
+        setRemoveCourse({
+            removeCourseData: []
+        })
     }
 
     const handleCancelClick = () => {
@@ -65,7 +83,9 @@ function Students() {
         }
         setDataOnChange(data)
         setEditStudentId(null)
-
+        setRemoveCourse({
+            removeCourseData: []
+        })
     }
 
     const onSubmitEdit = (e) => {
@@ -76,11 +96,14 @@ function Students() {
             firstname: editFormData.firstname,
             lastname: editFormData.lastname,
             age: editFormData.age,
-            class: editFormData.classname,
+            classname: editFormData.classname,
             courseData: courseData
         }
-        console.log("__________________------------------>" + courseData)
+        // console.log("__________________------------------>" + removeCourse.courseData.length)
 
+        if (removeCourse.removeCourseData.length > 0) {
+            dispatch(removeStudentsCourse(removeCourse))
+        }
         dispatch(updateStudent(editedStudent))
     }
 
@@ -101,13 +124,17 @@ function Students() {
 
         if (isUpdating) {
             setEditStudentId(null)
-            // dispatch(getStudents())
         }
 
         if (isDeleting) {
             dispatch(studentReset())
         }
 
+        if (isRemoving) {
+            dispatch(studentReset())
+        }
+
+        dispatch(getClasses())
         dispatch(getCourses())
         dispatch(getStudents())
 
@@ -115,7 +142,7 @@ function Students() {
             dispatch(courseReset())
             dispatch(classReset())
         }
-    }, [user, navigate, isUpdating, isError, isDeleting, message, dispatch])
+    }, [user, navigate, isUpdating, isError, isDeleting, isRemoving, message, dispatch])
 
     if (isLoading) {
         return <Spinner />
@@ -151,34 +178,36 @@ function Students() {
                 </button>
             </div> */}
             <form onSubmit={onSubmitEdit} className="table_form">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Age</th>
-                            <th>Class</th>
-                            <th>Courses</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
+                                <th>Age</th>
+                                <th>Class</th>
+                                <th>Courses</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
 
-                    {users?.map(user => {
-                        return (
-                            <tbody key={user.id}>
-                                <Fragment>
-                                    {editStudentId === user.id ? (
-                                        <EditRow editFormData={editFormData} setDataOnChange={setDataOnChange} dataOnChange={dataOnChange} onChange={onChange} handleCancelClick={handleCancelClick} />
-                                    ) : (
-                                        <StudentTable user={user} onEditClick={onEditClick} />
-                                    )}
-                                </Fragment>
-                            </tbody>
-                        )
-                    })}
+                        {users?.map(user => {
+                            return (
+                                <tbody key={user.id}>
+                                    <Fragment>
+                                        {editStudentId === user.id ? (
+                                            <EditRow editFormData={editFormData} setDataOnChange={setDataOnChange} coursesData={coursesData} class_={class_} removeCourse={removeCourse} setRemoveCourse={setRemoveCourse} onChange={onChange} handleCancelClick={handleCancelClick} user={user} />
+                                        ) : (
+                                            <StudentTable user={user} onEditClick={onEditClick} />
+                                        )}
+                                    </Fragment>
+                                </tbody>
+                            )
+                        })}
 
-                </table>
+                    </table>
+                </div>
             </form>
             {/* <CourseForm /> */}
             {/* <div>

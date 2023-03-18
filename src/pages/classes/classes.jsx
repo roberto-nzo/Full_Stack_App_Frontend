@@ -2,10 +2,12 @@ import React, { useEffect } from "react"
 import { Link } from 'react-router-dom'
 import { SiGoogleclassroom } from 'react-icons/si'
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
+import { CiEdit } from "react-icons/ci"
+import { AiFillDelete } from "react-icons/ai"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
-import { getClasses, reset as classReset } from "../../features/classes/classSlice"
+import { getClasses, deleteClass, reset as classReset } from "../../features/classes/classSlice"
 import { reset as courseReset } from "../../features/courses/courseSlice"
 import { logout, reset as studentReset } from '../../features/auth/authSlice'
 import Spinner from "../../components/Spinner";
@@ -16,7 +18,7 @@ function Classes() {
     const dispatch = useDispatch()
 
     const { user } = useSelector(state => state.auth)
-    const { classes, isLoading, isError, message } = useSelector(state => state.classes)
+    const { classes, isLoading, isDeleting, isError, message } = useSelector(state => state.classes)
 
     const onLogout = () => {
         dispatch(logout())
@@ -24,9 +26,21 @@ function Classes() {
         navigate('/')
     }
 
+    // Delete one row in class table
+    const onDelete = (class_) => {
+        if (window.confirm(`Are you sure you want to delete class ${class_.class}`)) {
+            dispatch(deleteClass(class_))
+            console.log(`Deleted class ${class_.class} with id ${class_.id}`)
+        }
+    }
+
     useEffect(() => {
         if (isError) {
             toast.error(message)
+        }
+
+        if (isDeleting) {
+            dispatch(classReset())
         }
 
         if (!user) {
@@ -39,7 +53,7 @@ function Classes() {
             dispatch(studentReset())
             dispatch(courseReset())
         }
-    }, [user, navigate, isError, message, dispatch])
+    }, [user, navigate, isDeleting, isError, message, dispatch])
 
     if (isLoading) {
         return <Spinner />
@@ -75,15 +89,23 @@ function Classes() {
                 </button>
             </div>
             <table>
-                <tr>
-                    <th>Class</th>
-                    <th>Students</th>
-                </tr>
-                {classes.map(class_ => {
-                    return <tr>
-                        <td>{class_.class}</td>
-                        <td>{class_.students.length !== 0 ? class_.students.map(std => std.firstname + ", ") : "-"}</td>
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Students</th>
+                        <th>Delete</th>
                     </tr>
+                </thead>
+
+                {classes.map(class_ => {
+                    return <tbody key={class_.id}>
+                        <tr>
+                            <td>{class_.class}</td>
+                            <td>{class_.students.length !== 0 ? class_.students.map(std => std.firstname + ", ") : "-"}</td>
+                            <td><AiFillDelete className="edit_row" onClick={() => onDelete(class_)} /></td>
+                        </tr>
+                    </tbody>
+
                 })}
             </table>
             {/* <Link to='/addclass'><SiGoogleclassroom /> Add Class</Link> */}

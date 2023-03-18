@@ -1,10 +1,7 @@
-import { useState, useEffect } from "react"
-import { confirmAlert } from 'react-confirm-alert'
 import { CiEdit } from "react-icons/ci"
 import { AiFillDelete } from "react-icons/ai"
-import { deleteStudent, getStudents } from "../features/auth/authSlice"
+import { deleteStudent } from "../features/auth/authSlice"
 import { useDispatch } from "react-redux"
-import Spinner from "./Spinner"
 
 function StudentTable({ user, onEditClick }) {
 

@@ -9,6 +9,7 @@ const createClass = async (classes, token) => {
             Authorization: `Bearer ${token}`
         }
     }
+    
 
     const response = await axios.post(API_URL, classes, config)
 
@@ -28,9 +29,21 @@ const getClasses = async (token) => {
     return response.data
 }
 
+// Delete classes
+const deleteClass = async (classData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    await axios.delete(API_URL + `${classData.id}`, config)
+}
+
 const classService = {
     createClass,
-    getClasses
+    getClasses,
+    deleteClass
 }
 
 export default classService

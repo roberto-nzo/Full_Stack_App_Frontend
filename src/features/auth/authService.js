@@ -21,14 +21,15 @@ const register = async (userData) => {
 // Update student
 const updateStudent = async (userData) => {
     const response = await axios.patch(API_URL + `${userData.id}`, userData)
-    
+    // console.log(userData.courseData)
+
     return response.data
 }
 
 // Login user
 const login = async (userData) => {
     const response = await axios.post(API_URL + 'login', userData)
-    console.log(userData)
+    // console.log(userData)
 
     if (response.data) {
         localStorage.setItem('user', JSON.stringify(response.data))
@@ -55,17 +56,27 @@ const logout = () => {
 }
 
 // Delete student
-const deleteStudent = async(userData, token) => {
+const deleteStudent = async (userData, token) => {
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
-    console.log("_______________+++++++++++++++=============>")
+    // console.log("_______________+++++++++++++++=============>")
 
-    console.log(userData)
-    const response = await axios.delete(API_URL + `${userData}`, userData)
-    return response.data
+    // console.log(userData)
+    await axios.delete(API_URL + userData, config)
+}
+
+// Remove course
+const removeStudentsCourse = async (userData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    console.log(userData.removeCourseData)
+    await axios.post(`${API_URL}course/${userData.id}`, userData, config)
 }
 
 const authService = {
@@ -74,7 +85,8 @@ const authService = {
     login,
     getStudents,
     logout,
-    deleteStudent
+    deleteStudent,
+    removeStudentsCourse
 }
 
 export default authService
