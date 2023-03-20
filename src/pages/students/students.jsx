@@ -150,6 +150,7 @@ function Students() {
     return (
         <>
             <div className="topNav">
+                <div></div>
                 <ul>
                     {user ?
                         (<>
@@ -178,36 +179,35 @@ function Students() {
                 </button>
             </div> */}
             <form onSubmit={onSubmitEdit} className="table_form">
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
-                                <th>Age</th>
-                                <th>Class</th>
-                                <th>Courses</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Age</th>
+                            <th>Class</th>
+                            <th>Courses</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
 
-                        {users?.map(user => {
-                            return (
-                                <tbody key={user.id}>
-                                    <Fragment>
-                                        {editStudentId === user.id ? (
-                                            <EditRow editFormData={editFormData} setDataOnChange={setDataOnChange} coursesData={coursesData} class_={class_} removeCourse={removeCourse} setRemoveCourse={setRemoveCourse} onChange={onChange} handleCancelClick={handleCancelClick} user={user} />
-                                        ) : (
-                                            <StudentTable user={user} onEditClick={onEditClick} />
-                                        )}
-                                    </Fragment>
-                                </tbody>
-                            )
-                        })}
+                    {users?.map(user => {
+                        return (
+                            <tbody key={user.id}>
+                                <Fragment>
+                                    {editStudentId === user.id ? (
+                                        <EditRow editFormData={editFormData} setDataOnChange={setDataOnChange} coursesData={coursesData} class_={class_} removeCourse={removeCourse} setRemoveCourse={setRemoveCourse} onChange={onChange} handleCancelClick={handleCancelClick} user={user} />
+                                    ) : (
+                                        <StudentTable user={user} onEditClick={onEditClick} />
+                                    )}
+                                </Fragment>
+                            </tbody>
+                        )
+                    })}
 
-                    </table>
-                </div>
+                </table>
+
             </form>
             {/* <CourseForm /> */}
             {/* <div>

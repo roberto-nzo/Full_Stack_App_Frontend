@@ -13,15 +13,37 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 
 function App() {
+  const menuBtn = document.querySelector('.menu-btn')
+  const sideBar = document.querySelector('.side-bar')
+  const options = document.querySelector('.options')
+
+  let showMenu = false
+
+  const toggleMenu = () => {
+    if (!showMenu) {
+      menuBtn.classList.add('close')
+      sideBar.classList.add('show')
+      options.classList.add('show')
+      
+      showMenu = true
+    } else {
+      menuBtn.classList.remove('close')
+      sideBar.classList.remove('show')
+      options.classList.remove('show')
+
+      showMenu = false
+    }
+  }
+
   return (
     <>
       <div className="container">
 
-        {/* <div className='menu-btn'>
-            <div className="menu-bar"></div>
-            <div className="menu-bar"></div>
-            <div className="menu-bar"></div>
-          </div> */}
+        <div className='menu-btn' onClick={toggleMenu}>
+          <div className="menu-bar"></div>
+          <div className="menu-bar"></div>
+          <div className="menu-bar"></div>
+        </div>
 
         <div className="content">
 

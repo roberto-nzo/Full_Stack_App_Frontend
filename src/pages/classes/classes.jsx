@@ -61,6 +61,10 @@ function Classes() {
     return (
         <>
             <div className="topNav">
+                <button className="btn_add">
+                    <Link to='/addclass'><SiGoogleclassroom /> Add class</Link>
+                </button>
+                
                 <ul>
                     {user ?
                         (<>
@@ -77,37 +81,39 @@ function Classes() {
                             </li>
                         </>)}
                 </ul>
+                
             </div>
+
+
+
             <div className="main-title">
                 <div className="title">
                     <p>Welcome {user && user.firstname + ' ' + user.lastname}</p>
                 </div>
             </div>
-            <div className="btn_btn">
-                <button className="btn_add">
-                    <Link to='/addclass'><SiGoogleclassroom /> Add class</Link>
-                </button>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Class</th>
-                        <th>Students</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
 
-                {classes.map(class_ => {
-                    return <tbody key={class_.id}>
+            <div className="table_class_course">
+                <table>
+                    <thead>
                         <tr>
-                            <td>{class_.class}</td>
-                            <td>{class_.students.length !== 0 ? class_.students.map(std => std.firstname + ", ") : "-"}</td>
-                            <td><AiFillDelete className="edit_row" onClick={() => onDelete(class_)} /></td>
+                            <th>Class</th>
+                            <th>Students</th>
+                            <th>Delete</th>
                         </tr>
-                    </tbody>
+                    </thead>
 
-                })}
-            </table>
+                    {classes.map(class_ => {
+                        return <tbody key={class_.id}>
+                            <tr>
+                                <td>{class_.class}</td>
+                                <td>{class_.students.length !== 0 ? class_.students.map(std => std.firstname + ", ") : "-"}</td>
+                                <td><AiFillDelete className="edit_row" onClick={() => onDelete(class_)} /></td>
+                            </tr>
+                        </tbody>
+
+                    })}
+                </table>
+            </div>
             {/* <Link to='/addclass'><SiGoogleclassroom /> Add Class</Link> */}
         </>
     )

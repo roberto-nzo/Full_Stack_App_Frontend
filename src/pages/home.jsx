@@ -20,6 +20,7 @@ function Home() {
     return (
         <>
             <div className="topNav">
+                <div></div>
                 <ul>
                     {user ?
                         (<>

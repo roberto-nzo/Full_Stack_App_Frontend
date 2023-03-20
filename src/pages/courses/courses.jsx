@@ -61,6 +61,10 @@ function Courses() {
     return (
         <>
             <div className="topNav">
+                <button className="btn_add">
+                    <Link to='/addcourse'><SiBookstack /> Add course</Link>
+                </button>
+
                 <ul>
                     {user ?
                         (<>
@@ -77,6 +81,7 @@ function Courses() {
                             </li>
                         </>)}
                 </ul>
+
             </div>
 
             <div className="main-title">
@@ -84,31 +89,28 @@ function Courses() {
                     <p>Welcome {user && user.firstname + ' ' + user.lastname}</p>
                 </div>
             </div>
-            <div className="btn_btn">
-                <button className="btn_add">
-                    <Link to='/addcourse'><SiBookstack />Add course</Link>
-                </button>
-            </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Courses</th>
-                        <th>Students</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                {courses.map(course => {
-                    return <tbody key={course.id}>
+            <div className="table_class_course">
+                <table>
+                    <thead>
                         <tr>
-                            <td>{course.coursename}</td>
-                            <td>{course.Students.length !== 0 ? course.Students.map(std => std.firstname + ", ") : "-"}</td>
-                            <td><AiFillDelete className="edit_row" onClick={() => onDelete(course)} /></td>
+                            <th>Courses</th>
+                            <th>Students</th>
+                            <th>Delete</th>
                         </tr>
-                    </tbody>
+                    </thead>
+                    {courses.map(course => {
+                        return <tbody key={course.id}>
+                            <tr>
+                                <td>{course.coursename}</td>
+                                <td>{course.Students.length !== 0 ? course.Students.map(std => std.firstname + ", ") : "-"}</td>
+                                <td><AiFillDelete className="edit_row" onClick={() => onDelete(course)} /></td>
+                            </tr>
+                        </tbody>
 
-                })}
-            </table>
+                    })}
+                </table>
+            </div>
         </>
     )
 }
