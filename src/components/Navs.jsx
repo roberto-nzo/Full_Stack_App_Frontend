@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { BsPeopleFill } from "react-icons/bs";
 import { SiGoogleclassroom, SiBookstack } from "react-icons/si";
 import { useState } from 'react';
@@ -24,9 +24,9 @@ function Navs({ children }) {
                         </a>
                     </div>
                     <div className='side-links'>
-                        <Link to='/students' className='side-link'><BsPeopleFill /> Students</Link>
-                        <Link to='/classes' className='side-link'><SiGoogleclassroom /> Classes</Link>
-                        <Link to='/courses' className='side-link'><SiBookstack />Courses</Link>
+                        <NavLink to='/students' className='side-link'><BsPeopleFill /> Students</NavLink>
+                        <NavLink to='/classes' className='side-link'><SiGoogleclassroom /> Classes</NavLink>
+                        <NavLink to='/courses' className='side-link'><SiBookstack />Courses</NavLink>
                     </div>
                 </div>
             </div>

@@ -23,11 +23,10 @@ function Home() {
                 <div></div>
                 <ul>
                     {user ?
-                        (<>
+                        (
                             <li>
                                 <button className="btn" onClick={onLogout}><FaSignOutAlt /> Logout</button>
-                            </li>
-                        </>) :
+                            </li>) :
                         (<>
                             <li>
                                 <Link to='/register'><FaUser /> Register</Link>

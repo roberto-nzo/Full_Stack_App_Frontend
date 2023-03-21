@@ -186,6 +186,10 @@ tr:nth-child(even) {
   background: rgb(35, 127, 155);
 }
 
+.side-link.active {
+  background: rgb(35, 127, 155);
+}
+
 .options {
   transition: all 0.7s ease-out;
   display: flex;
@@ -212,10 +216,6 @@ tr:nth-child(even) {
   margin-bottom: 5rem;
 }
 
-.options ul {
-  display: flex;
-}
-
 .topNav .btn_add {
   background-color: #4CAF50;
   border: none;
@@ -225,6 +225,14 @@ tr:nth-child(even) {
   font-weight: 700;
   border-radius: 5px;
   margin-right: 2em;
+}
+
+.topNav ul{
+  display: flex;
+}
+
+.topNav ul li{
+  margin-right: 10px;
 }
 
 .btn {
@@ -391,9 +399,15 @@ tr:nth-child(even) {
     font-size: 13px;
     width: 80px;
   }
+  
+  .options .topNav ul{
+    display: flex;
+    flex-direction: column;
+    font-size: small;
+  }
 
-  .options .topNav ul li {
-    margin-right: 1em;
+  .add .title{
+    font-size: small;
   }
 
   .topNav .btn_add,
@@ -422,9 +436,9 @@ tr:nth-child(even) {
     width: 50px;
   }
 
-  .options .topNav ul li {
-    margin-right: 0.4em;
-  }
+  /* .options .topNav ul li {
+    margin-right: 10em;
+  } */
 
   .topNav .btn_add,
   .btn {
