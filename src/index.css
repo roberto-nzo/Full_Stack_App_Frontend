@@ -4,7 +4,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /* border: 1px solid red; */
 }
 
 body {
@@ -44,7 +43,6 @@ table th {
   border: 1px solid #dddddd;
   text-align: center;
   padding: 8px;
-  /* min-width: ; */
 }
 
 table tbody td input {
@@ -88,6 +86,7 @@ tr:nth-child(even) {
   width: 28px;
   height: 3px;
   margin: 0 0 5px 0;
+  transition: all .3s ease-out;
 }
 
 .menu-btn.close .menu-bar:nth-child(1) {
@@ -105,7 +104,6 @@ tr:nth-child(even) {
 .content {
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
 }
 
 .side-bar {
@@ -125,24 +123,24 @@ tr:nth-child(even) {
   width: 21.6vw;
 }
 
-.profile-branding .portrait {
+.profile {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25vh;
+  background: rgb(35, 127, 155);
+  color: #fff;
+}
+
+.profile .portrait {
   width: 150px;
   height: 150px;
   background: url(./assets/images/gunsel-logo.png);
   border-radius: 50%;
   background-size: cover;
-  margin-top: 10px;
 }
 
-.profile {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  height: 25vh;
-  background: rgb(114, 66, 159);
-  color: #fff;
-  padding-bottom: 170px;
-}
 
 .description {
   display: flex;
@@ -181,36 +179,11 @@ tr:nth-child(even) {
   font-size: 13px;
   cursor: pointer;
   background: #333;
-}
-
-._link {
   color: #fff;
 }
 
-.side-link .fix-icon {
-  padding: 0px 3px;
-  margin-right: 15px;
-  border: #333 1px solid;
-  border-bottom-left-radius: 50%;
-  border-bottom-right-radius: 50%;
-  font-size: 2em;
-}
-
-.side-links .current {
-  background: rgb(222, 222, 222);
-}
-
-.courses {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
-}
-
-.course {
-  background-color: #f4f4f4;
-  margin: 15px 0;
-  padding: 20px 0 10px;
-  position: relative;
+.side-link:hover {
+  background: rgb(35, 127, 155);
 }
 
 .options {
@@ -233,37 +206,25 @@ tr:nth-child(even) {
 .options .topNav {
   width: 90%;
   display: flex;
-  justify-content: space-between;
-  align-items: start;
+  justify-content: flex-end;
+  align-items: flex-start;
   margin-top: 3rem;
   margin-bottom: 5rem;
-  /* border: 1px solid red; */
 }
 
 .options ul {
   display: flex;
 }
 
-.options .topNav ul li {
-  margin-right: 2em;
-}
-
-/* .content .btn_btn {
-  justify-self: end;
-  align-self: start;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-  margin-left: 20px;
-} */
-
 .topNav .btn_add {
   background-color: #4CAF50;
   border: none;
   cursor: pointer;
   padding: 10px 20px;
-  font-size: 10px;
+  font-size: 16px;
   font-weight: 700;
   border-radius: 5px;
+  margin-right: 2em;
 }
 
 .btn {
@@ -272,11 +233,9 @@ tr:nth-child(even) {
   border-radius: 5px;
   background: #000;
   color: #fff;
-  font-size: 10px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  /* text-align: center; */
-  /* appearance: button; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -286,8 +245,7 @@ tr:nth-child(even) {
   height: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: start;
-  /* margin-top: -50px; */
+  align-items: flex-start;
 }
 
 .options .home .wise {
@@ -315,7 +273,6 @@ tr:nth-child(even) {
 
 .be p {
   font-size: xx-large;
-  /* border: 1px solid red; */
 }
 
 .be i {
@@ -342,7 +299,6 @@ tr:nth-child(even) {
   font-size: 2rem;
   font-weight: bold;
   box-shadow: #333 -5px 0px 20px -20px;
-  /* border: 1px solid red; */
 }
 
 .options .add {
@@ -419,7 +375,6 @@ tr:nth-child(even) {
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    /* margin-top: -7px; */
   }
 
   .options .home .wise,
@@ -430,11 +385,6 @@ tr:nth-child(even) {
 
   .options .main-title {
     margin-bottom: 7vh;
-  }
-
-  table tbody td,
-  table th {
-    font-size: 13px;
   }
 
   table tbody tr td button {
@@ -449,18 +399,22 @@ tr:nth-child(even) {
   .topNav .btn_add,
   .btn {
     padding: 5px 14px;
-    font-size: 10px;
   }
 }
 
 @media screen and (max-width: 880px) {
+  .profile .portrait {
+    width: 110px;
+    height: 110px;
+  }
+
   .options .main-title {
     font-size: 1.5rem;
   }
 
   table tbody td,
   table th {
-    font-size: 10px;
+    font-size: 14px;
   }
 
   table tbody tr td button {
@@ -475,7 +429,7 @@ tr:nth-child(even) {
   .topNav .btn_add,
   .btn {
     padding: 4px 10px;
-    font-size: 8px;
+    font-size: 14px;
   }
 }
 
@@ -487,7 +441,7 @@ tr:nth-child(even) {
 
   table tbody td,
   table th {
-    font-size: 7px;
+    font-size: 12px;
   }
 
   table tbody tr td button {
@@ -513,9 +467,25 @@ tr:nth-child(even) {
   .be i {
     font-size: 3rem;
   }
+
+  .topNav .btn_add,
+  .btn {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
 }
 
 @media screen and (max-width: 599px) {
+  .profile .portrait {
+    width: 80px;
+    height: 80px;
+  }
+
+  .side-link {
+    padding-left: 7px;
+    font-size: 10px;
+  }
+
   .options .main-title {
     font-size: 1rem;
     margin-bottom: 3vh;
@@ -523,7 +493,7 @@ tr:nth-child(even) {
 
   table tbody td,
   table th {
-    font-size: 7px;
+    font-size: 9.5px;
   }
 
   table tbody tr td button {
@@ -534,10 +504,16 @@ tr:nth-child(even) {
   .topNav .btn_add,
   .btn {
     padding: 3px 5px;
+    font-size: 9.5px;
   }
 }
 
 @media screen and (max-width: 427px) {
+  .profile .portrait {
+    width: 70px;
+    height: 70px;
+  }
+
   .options .main-title {
     font-size: 1rem;
     margin-bottom: 1vh;
@@ -545,7 +521,7 @@ tr:nth-child(even) {
 
   table tbody td,
   table th {
-    font-size: 5px;
+    font-size: 7.6px;
   }
 
   table tbody tr td button {
@@ -556,7 +532,7 @@ tr:nth-child(even) {
   .topNav .btn_add,
   .btn {
     padding: 3px 5px;
-    font-size: 6px;
+    font-size: 7.6px;
   }
 
   .options .home {
@@ -568,7 +544,6 @@ tr:nth-child(even) {
   .options .home .wise {
     width: 30vw;
     height: 15vh;
-    border: 1px solid red;
   }
 
   .be p {
@@ -581,6 +556,16 @@ tr:nth-child(even) {
 }
 
 @media screen and (max-width: 366px) {
+  .profile .portrait {
+    width: 60px;
+    height: 60px;
+  }
+
+  .side-link {
+    padding-left: 7px;
+    font-size: 8px;
+  }
+
   .options .main-title {
     font-size: 0.8rem;
     margin-bottom: 0.3vh;
@@ -588,16 +573,26 @@ tr:nth-child(even) {
 
   table tbody td,
   table th {
-    font-size: 3px;
+    font-size: 5.5px;
   }
 
   table tbody tr td button {
     font-size: 3px;
     width: 15px;
   }
+
+  .topNav .btn_add,
+  .btn {
+    font-size: 5.5px;
+  }
 }
 
 @media screen and (max-width: 300px) {
+  .profile .portrait {
+    width: 50px;
+    height: 50px;
+  }
+
   .options .main-title {
     font-size: 0.7rem;
     margin-bottom: 0.3vh;
@@ -605,11 +600,16 @@ tr:nth-child(even) {
 
   table tbody td,
   table th {
-    font-size: 2.5px;
+    font-size: 4.5px;
   }
 
   table tbody tr td button {
     font-size: 3px;
     width: 15px;
+  }
+
+  .topNav .btn_add,
+  .btn {
+    font-size: 4.5px;
   }
 }
