@@ -19,12 +19,12 @@ function App() {
 
   let showMenu = false
 
-  const toggleMenu = () => {
+  function toggleMenu() {
     if (!showMenu) {
       menuBtn.classList.add('close')
       sideBar.classList.add('show')
       options.classList.add('show')
-      
+
       showMenu = true
     } else {
       menuBtn.classList.remove('close')
