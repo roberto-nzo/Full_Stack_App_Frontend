@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "proxy": "https://fullstackapp-production-c59e.up.railway.app/",
+  "proxy": "https://fullstackapp-production-3a32.up.railway.app/",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.2",
